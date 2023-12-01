@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 def get_data(day) -> list[str]:
     """Automatically collects data from website
 
@@ -18,24 +19,21 @@ def get_data(day) -> list[str]:
         list[str]: Returns the collected information either from file
     """
     folder = Path("./data")
-    file = (folder / Path(f"day_{day}.txt"))
+    file = folder / Path(f"day_{day}.txt")
     if not file.exists():
         url = f"https://adventofcode.com/2023/day/{day}/input"
-        print(f'File not found, downloading from: {url}')
-        
-        request = httpx.get(
-            url,
-            cookies={'session': os.environ.get('SESSIONCOOKIE')}
-        )
+        print(f"File not found, downloading from: {url}")
+
+        request = httpx.get(url, cookies={"session": os.environ.get("SESSIONCOOKIE")})
         data = request.text
         with file.open("w") as f:
             f.write(data)
-        
 
     with file.open("r") as f:
         data = f.read().splitlines()
 
     return data
+
 
 def get_example_data(day, extra="") -> list[str]:
     """Gets the example data for the day
@@ -46,9 +44,9 @@ def get_example_data(day, extra="") -> list[str]:
     Returns:
         list[str]: List of strings
     """
-    
+
     folder = Path("./data")
-    file = (folder / Path(f"day_{day}_example{extra}.txt"))
+    file = folder / Path(f"day_{day}_example{extra}.txt")
 
     with file.open("r") as f:
         data = f.read().splitlines()
