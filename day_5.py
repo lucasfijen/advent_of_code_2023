@@ -56,7 +56,20 @@ handle_question_1(final_data)
 # %%
 
 
-def handle_question_2(data):
+def handle_question_2(data:list[str]) -> int:
+    """In the second question, we'll get large numbers to process,
+    which is too much to handle in memory, so we'll have to convert to 
+    use of ranges, and calculating with those.
+
+    I create 2d numpy arrays, in which the first col is the startnr
+    and the second the length of the range.
+
+    Args:
+        data (list[str]): Data to be used
+
+    Returns:
+        int: lowest startnumber
+    """
     rngs = re.findall(r"(\d+) (\d+)", data[0])
     all_startseeds = np.array(rngs, dtype=int)
 
@@ -75,7 +88,7 @@ def handle_question_2(data):
                 re.match(r"(\d+) (\d+) (\d+)", line).group(1, 2, 3), dtype=int
             )
 
-            # selection only with overla :
+            # selection only with overlap :
             overlap_mask = ~(
                 ((start + rng) <= val[:, 0]) | (start >= (val.sum(axis=1)))
             )
@@ -103,6 +116,7 @@ def handle_question_2(data):
 
     newval = np.concatenate((newval, val))
 
+    # Here we can nvm the range aspect, as ranges only go up in numbers
     return newval[:, 0].min()
 
 
