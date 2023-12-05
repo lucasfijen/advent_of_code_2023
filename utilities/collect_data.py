@@ -19,7 +19,7 @@ def get_data(day) -> list[str]:
         list[str]: Returns the collected information either from file
     """
     folder = Path("./data")
-    file = folder / Path(f"day_{day}.txt")
+    file = folder / Path(f"day_{day:02}.txt")
     if not file.exists():
         url = f"https://adventofcode.com/2023/day/{day}/input"
         print(f"File not found, downloading from: {url}")
@@ -46,7 +46,7 @@ def get_example_data(day, extra="") -> list[str]:
     """
 
     folder = Path("./data")
-    file = folder / Path(f"day_{day}_example{extra}.txt")
+    file = folder / Path(f"day_{day:02}_example{extra}.txt")
 
     with file.open("r") as f:
         data = f.read().splitlines()
